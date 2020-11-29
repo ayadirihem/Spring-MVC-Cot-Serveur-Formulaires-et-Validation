@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="ISO-8859-1">
+<title>Liste des Medicaments</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header">
+Liste des Medicaments
+</div>
+<div class="card-body">
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Nom Medicament</th><th>Prix</th><th>Qte</th><th>Date Creation</th><th></th>
+</tr>
+<tr th:each="p:${medicaments.content}">
+<td th:text="${p.idMedicament}"></td>
+<td th:text="${p.nomMedicament}"></td>
+<td th:text="${p.prixMedicament}"></td>
+<td th:text="${p.qteMedicament}"></td>
+<td><fmt:formatDate pattern="dd/MM/yyyy" th:text="${p.dateCreation}" /></td>
+<td><a class="btn btn-success" th:href="@{modifierMedicament(id=${p.idMedicament})}">Editer</a></td>
+<td><a onclick="return confirm('Etes-vous sûr ?')" class="btn btn-danger" th:href="@{supprimerMedicament(id=${p.idMedicament}, page=${currentPage},size=${size})}">Supprimer</a></td>
+</tr>
+</table>
+<ul class="nav nav-pills">
+<li th:each="page,status:${pages}">
+<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+th:href="@{ ListeMedicaments(page=${status.index}, size=${size} ) }"
+th:text="${status.index }"></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
